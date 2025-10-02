@@ -1,0 +1,176 @@
+{% extends "base.html" %} {% block title %}Home - ISL Translator{% endblock %}
+{% block page_css %}
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='css/index.css') }}"
+/>
+{% endblock %} {% block content %}
+<!-- Hero Section -->
+<section class="index-page-hero">
+  <div class="index-page-hero-container">
+    <div class="index-page-hero-content">
+      <div class="index-page-hero-text">
+        <h1 class="index-page-hero-title">
+          Empowering Communication with
+          <span class="gradient-text">Indian Sign Language</span>
+        </h1>
+        <p class="index-page-hero-description">
+          Bridging the communication gap with advanced AI technology. Our
+          real-time sign language translator helps the deaf and hard of hearing
+          community communicate more effectively.
+        </p>
+        <div class="index-page-hero-buttons">
+          <a href="{{ url_for('detector') }}" class="btn btn-primary">
+            <i class="fas fa-video"></i>
+            Try It Now
+          </a>
+          <a href="{{ url_for('about') }}" class="btn btn-secondary">
+            <i class="fas fa-info-circle"></i>
+            Learn More
+          </a>
+        </div>
+      </div>
+      <div class="index-page-hero-visual">
+        <div class="index-page-hero-image">
+          <div class="index-page-floating-card index-page-card-1">
+            <i class="fas fa-hand-paper"></i>
+            <span>Real-time Detection</span>
+          </div>
+          <div class="index-page-floating-card index-page-card-2">
+            <i class="fas fa-spell-check"></i>
+            <span>Word Building</span>
+          </div>
+          <div class="index-page-floating-card index-page-card-3">
+            <i class="fas fa-comments"></i>
+            <span>Sentence Creation</span>
+          </div>
+          <div class="index-page-hero-avatar">
+            <div class="index-page-avatar-circle">
+              <i class="fas fa-user"></i>
+            </div>
+            <div class="index-page-gesture-indicators">
+              <div class="index-page-gesture-dot active"></div>
+              <div class="index-page-gesture-dot"></div>
+              <div class="index-page-gesture-dot"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Features Section -->
+<section class="index-page-features">
+  <div class="index-page-features-container">
+    <div class="section-header">
+      <h2 class="section-title">Main Features</h2>
+      <p class="section-description">
+        Here are some key features of our sign language translator.
+      </p>
+    </div>
+
+    <div class="index-page-features-grid">
+      <div class="index-page-feature-card">
+        <div class="index-page-feature-icon">
+          <i class="fas fa-bolt"></i>
+        </div>
+        <h3 class="index-page-feature-title">Real Time Sign Conversion</h3>
+        <p class="index-page-feature-description">
+          Our model supports real time Indian Sign Language (ISL) to text
+          translation with accurate results.
+        </p>
+        <ul class="index-page-feature-list">
+          <li><i class="fas fa-check"></i> Instant Translation</li>
+          <li><i class="fas fa-check"></i> High Accuracy</li>
+          <li>
+            <i class="fas fa-check"></i> Supports Indian Sign Language (ISL)
+          </li>
+        </ul>
+        <a href="{{ url_for('detector') }}" class="index-page-feature-btn">
+          Check it out <i class="fas fa-arrow-right"></i>
+        </a>
+      </div>
+
+      <div class="index-page-feature-card">
+        <div class="index-page-feature-icon">
+          <i class="fas fa-keyboard"></i>
+        </div>
+        <h3 class="index-page-feature-title">Smart Word Building</h3>
+        <p class="index-page-feature-description">
+          Advanced algorithm that builds words letter by letter and creates
+          meaningful sentences automatically.
+        </p>
+        <ul class="index-page-feature-list">
+          <li><i class="fas fa-check"></i> Letter Recognition</li>
+          <li><i class="fas fa-check"></i> Word Formation</li>
+          <li><i class="fas fa-check"></i> Context Awareness</li>
+        </ul>
+        <a href="{{ url_for('detector') }}" class="index-page-feature-btn">
+          Try Now <i class="fas fa-arrow-right"></i>
+        </a>
+      </div>
+
+      <div class="index-page-feature-card">
+        <div class="index-page-feature-icon">
+          <i class="fas fa-save"></i>
+        </div>
+        <h3 class="index-page-feature-title">Save & Export</h3>
+        <p class="index-page-feature-description">
+          Save your translated sentences and export them for later use. Perfect
+          for creating documents and communication logs.
+        </p>
+        <ul class="index-page-feature-list">
+          <li><i class="fas fa-check"></i> Text File Export</li>
+          <li><i class="fas fa-check"></i> Timestamped Records</li>
+          <li><i class="fas fa-check"></i> History Management</li>
+        </ul>
+        <a href="{{ url_for('detector') }}" class="index-page-feature-btn">
+          Get Started <i class="fas fa-arrow-right"></i>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Stats Section -->
+<section class="index-page-stats">
+  <div class="index-page-stats-container">
+    <div class="index-page-stats-grid">
+      <div class="index-page-stat-item">
+        <div class="index-page-stat-number">43</div>
+        <div class="index-page-stat-label">Recognized Signs</div>
+      </div>
+      <div class="index-page-stat-item">
+        <div class="index-page-stat-number">95%</div>
+        <div class="index-page-stat-label">Accuracy Rate</div>
+      </div>
+      <div class="index-page-stat-item">
+        <div class="index-page-stat-number">1.5s</div>
+        <div class="index-page-stat-label">Detection Time</div>
+      </div>
+      <div class="index-page-stat-item">
+        <div class="index-page-stat-number">Real-time</div>
+        <div class="index-page-stat-label">Processing</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA Section -->
+<section class="index-page-cta">
+  <div class="index-page-cta-container">
+    <div class="index-page-cta-content">
+      <h2 class="index-page-cta-title">Ready to Start Communicating?</h2>
+      <p class="index-page-cta-description">
+        Experience the power of AI-driven sign language translation. Start using
+        our detector now and break communication barriers.
+      </p>
+      <a href="{{ url_for('detector') }}" class="btn btn-primary btn-large">
+        <i class="fas fa-play"></i>
+        Start Detection
+      </a>
+    </div>
+  </div>
+</section>
+{% endblock %}

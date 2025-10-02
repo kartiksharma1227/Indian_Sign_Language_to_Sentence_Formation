@@ -1,0 +1,292 @@
+{% extends "base.html" %} {% block title %}About - ISL Translator{% endblock %}
+{% block page_css %}
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='css/about.css') }}"
+/>
+{% endblock %} {% block content %}
+<!-- About Hero -->
+<section class="about-page-hero">
+  <div class="about-page-container">
+    <div class="about-page-content">
+      <h1 class="about-page-title">
+        About <span class="gradient-text">ISL Translator</span>
+      </h1>
+      <p class="about-page-description">
+        Breaking communication barriers through advanced AI and computer vision
+        technology.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- Mission Section -->
+<section class="about-page-mission">
+  <div class="about-page-mission-container">
+    <div class="about-page-mission-grid">
+      <div class="about-page-mission-content">
+        <h2 class="about-page-mission-title">Our Mission</h2>
+        <p class="about-page-mission-text">
+          To empower the deaf and hard of hearing community by providing
+          accessible, real-time sign language translation technology. We believe
+          communication should be barrier-free for everyone.
+        </p>
+        <div class="about-page-mission-stats">
+          <div class="about-page-mission-stat">
+            <strong>70 million+</strong>
+            <span>Deaf people worldwide</span>
+          </div>
+          <div class="about-page-mission-stat">
+            <strong>200+</strong>
+            <span>Sign languages globally</span>
+          </div>
+        </div>
+      </div>
+      <div class="about-page-mission-visual">
+        <div class="about-page-mission-icon">
+          <i class="fas fa-hands-helping"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Technology Section -->
+<section class="about-page-technology">
+  <div class="about-page-technology-container">
+    <div class="section-header">
+      <h2 class="section-title">Technology Stack</h2>
+      <p class="section-description">
+        Built with cutting-edge technologies for accurate and reliable sign
+        language detection.
+      </p>
+    </div>
+
+    <div class="about-page-tech-grid">
+      <div class="about-page-tech-card">
+        <div class="about-page-tech-icon">
+          <i class="fas fa-brain"></i>
+        </div>
+        <h3>Machine Learning</h3>
+        <p>
+          Deep neural networks trained on thousands of sign language gestures
+          for high accuracy recognition.
+        </p>
+        <div class="about-page-tech-tags">
+          <span class="about-page-tech-tag">TensorFlow</span>
+          <span class="about-page-tech-tag">Keras</span>
+          <span class="about-page-tech-tag">Neural Networks</span>
+        </div>
+      </div>
+
+      <div class="about-page-tech-card">
+        <div class="about-page-tech-icon">
+          <i class="fas fa-eye"></i>
+        </div>
+        <h3>Computer Vision</h3>
+        <p>
+          Advanced hand tracking and landmark detection using Google's MediaPipe
+          framework.
+        </p>
+        <div class="about-page-tech-tags">
+          <span class="about-page-tech-tag">MediaPipe</span>
+          <span class="about-page-tech-tag">OpenCV</span>
+          <span class="about-page-tech-tag">Hand Tracking</span>
+        </div>
+      </div>
+
+      <div class="about-page-tech-card">
+        <div class="about-page-tech-icon">
+          <i class="fas fa-globe"></i>
+        </div>
+        <h3>Web Technologies</h3>
+        <p>
+          Modern web stack for real-time processing and seamless user experience
+          across devices.
+        </p>
+        <div class="about-page-tech-tags">
+          <span class="about-page-tech-tag">Flask</span>
+          <span class="about-page-tech-tag">JavaScript</span>
+          <span class="about-page-tech-tag">WebRTC</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- How It Works -->
+<section class="about-page-how-it-works">
+  <div class="about-page-how-container">
+    <div class="section-header">
+      <h2 class="section-title">How It Works</h2>
+      <p class="section-description">
+        Understanding the technology behind our sign language detection system.
+      </p>
+    </div>
+
+    <div class="about-page-process-steps">
+      <div class="about-page-process-step">
+        <div class="about-page-step-number">1</div>
+        <div class="about-page-step-content">
+          <h3>Hand Detection</h3>
+          <p>
+            MediaPipe identifies and tracks hand landmarks in real-time video
+            feed with 21 key points per hand.
+          </p>
+        </div>
+        <div class="about-page-step-icon">
+          <i class="fas fa-hand-paper"></i>
+        </div>
+      </div>
+
+      <div class="about-page-process-step">
+        <div class="about-page-step-number">2</div>
+        <div class="about-page-step-content">
+          <h3>Feature Extraction</h3>
+          <p>
+            Landmark coordinates are normalized and processed into feature
+            vectors for model input.
+          </p>
+        </div>
+        <div class="about-page-step-icon">
+          <i class="fas fa-cogs"></i>
+        </div>
+      </div>
+
+      <div class="about-page-process-step">
+        <div class="about-page-step-number">3</div>
+        <div class="about-page-step-content">
+          <h3>Classification</h3>
+          <p>
+            Neural network classifies the gesture into one of 43 possible signs
+            (A-Z, 1-9).
+          </p>
+        </div>
+        <div class="about-page-step-icon">
+          <i class="fas fa-robot"></i>
+        </div>
+      </div>
+
+      <div class="about-page-process-step">
+        <div class="about-page-step-number">4</div>
+        <div class="about-page-step-content">
+          <h3>Word Building</h3>
+          <p>
+            Detected letters are combined into words and sentences with
+            intelligent timing algorithms.
+          </p>
+        </div>
+        <div class="about-page-step-icon">
+          <i class="fas fa-spell-check"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Features Detail -->
+<section class="about-page-features-detail">
+  <div class="about-page-features-container">
+    <div class="section-header">
+      <h2 class="section-title">Key Features</h2>
+    </div>
+
+    <div class="about-page-features-list">
+      <div class="about-page-feature-item">
+        <div class="about-page-feature-icon">
+          <i class="fas fa-lightning-bolt"></i>
+        </div>
+        <div class="about-page-feature-content">
+          <h3>Real-time Processing</h3>
+          <p>
+            Instant detection and translation with minimal latency for natural
+            communication flow.
+          </p>
+        </div>
+      </div>
+
+      <div class="about-page-feature-item">
+        <div class="about-page-feature-icon">
+          <i class="fas fa-bullseye"></i>
+        </div>
+        <div class="about-page-feature-content">
+          <h3>High Accuracy</h3>
+          <p>
+            95%+ accuracy rate achieved through extensive training on diverse
+            sign language datasets.
+          </p>
+        </div>
+      </div>
+
+      <div class="about-page-feature-item">
+        <div class="about-page-feature-icon">
+          <i class="fas fa-mobile-alt"></i>
+        </div>
+        <div class="about-page-feature-content">
+          <h3>Cross-platform</h3>
+          <p>
+            Works seamlessly across desktop and mobile devices with responsive
+            web design.
+          </p>
+        </div>
+      </div>
+
+      <div class="about-page-feature-item">
+        <div class="about-page-feature-icon">
+          <i class="fas fa-save"></i>
+        </div>
+        <div class="about-page-feature-content">
+          <h3>Export Functionality</h3>
+          <p>
+            Save translated sentences to text files for documentation and
+            communication purposes.
+          </p>
+        </div>
+      </div>
+
+      <div class="about-page-feature-item">
+        <div class="about-page-feature-icon">
+          <i class="fas fa-users"></i>
+        </div>
+        <div class="about-page-feature-content">
+          <h3>Accessibility Focused</h3>
+          <p>
+            Designed with accessibility principles to ensure usability for all
+            users.
+          </p>
+        </div>
+      </div>
+
+      <div class="about-page-feature-item">
+        <div class="about-page-feature-icon">
+          <i class="fas fa-shield-alt"></i>
+        </div>
+        <div class="about-page-feature-content">
+          <h3>Privacy Protected</h3>
+          <p>
+            All processing happens locally in your browser - no video data is
+            transmitted or stored.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta">
+  <div class="cta-container">
+    <div class="cta-content">
+      <h2 class="cta-title">Ready to Experience ISL Translation?</h2>
+      <p class="cta-description">
+        Start using our detector now and see how AI can break down communication
+        barriers.
+      </p>
+      <a href="{{ url_for('detector') }}" class="btn btn-primary btn-large">
+        <i class="fas fa-play"></i>
+        Try the Detector
+      </a>
+    </div>
+  </div>
+</section>
+{% endblock %}

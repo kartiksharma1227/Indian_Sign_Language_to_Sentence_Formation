@@ -1,0 +1,241 @@
+{% extends "base.html" %} {% block title %}Detector - ISL Translator{% endblock
+%} {% block page_css %}
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='css/detector.css') }}"
+/>
+{% endblock %} {% block content %}
+<!-- Detector Section -->
+<section class="detector-page-detector">
+  <div class="detector-page-detector-container">
+    <div class="detector-page-detector-header">
+      <h1 class="detector-page-detector-title">
+        <i class="fas fa-video"></i>
+        Sign Language Detector
+      </h1>
+      <p class="detector-page-detector-description">
+        Hold your hand gestures in front of the camera to detect letters and
+        build words.
+      </p>
+    </div>
+
+    <div class="detector-page-detector-content">
+      <!-- Video Feed -->
+      <div class="detector-page-video-section">
+        <div class="detector-page-video-container">
+          <div class="detector-page-video-placeholder" id="videoPlaceholder">
+            <i class="fas fa-video-slash"></i>
+            <h3>Camera Not Started</h3>
+            <p>Click "Start Detection" to begin</p>
+          </div>
+          <canvas id="videoCanvas" style="display: none"></canvas>
+
+          <!-- Video Controls -->
+          <div class="detector-page-video-controls">
+            <button
+              id="startBtn"
+              class="btn btn-success"
+              onclick="console.log('Button clicked via onclick!'); if(window.detector) window.detector.startDetection();"
+            >
+              <i class="fas fa-play"></i> Start Detection
+            </button>
+            <button
+              id="stopBtn"
+              class="btn btn-danger"
+              style="display: none"
+              onclick="if(window.detector) window.detector.stopDetection();"
+            >
+              <i class="fas fa-stop"></i> Stop Detection
+            </button>
+          </div>
+        </div>
+
+        <!-- Progress Bars -->
+        <div class="detector-page-progress-section">
+          <div class="detector-page-progress-item">
+            <label>Letter Detection Progress</label>
+            <div class="detector-page-progress-bar">
+              <div
+                class="detector-page-progress-fill"
+                id="letterProgress"
+              ></div>
+            </div>
+            <span class="detector-page-progress-text" id="letterProgressText"
+              >Hold gesture for 1.5s</span
+            >
+          </div>
+
+          <div
+            class="detector-page-progress-item"
+            id="spaceProgressContainer"
+            style="display: none"
+          >
+            <label>Space Addition Progress</label>
+            <div class="detector-page-progress-bar">
+              <div
+                class="detector-page-progress-fill detector-page-progress-space"
+                id="spaceProgress"
+              ></div>
+            </div>
+            <span class="detector-page-progress-text" id="spaceProgressText"
+              >Remove hand for 3s</span
+            >
+          </div>
+        </div>
+      </div>
+
+      <!-- Detection Results -->
+      <div class="detector-page-results-section">
+        <div class="detector-page-detection-display">
+          <div class="current-detection">
+            <h3><i class="fas fa-eye"></i> Currently Detecting</h3>
+            <div class="detector-page-detection-letter" id="detectedLetter">
+              -
+            </div>
+          </div>
+
+          <div class="word-building">
+            <h3><i class="fas fa-spell-check"></i> Current Word</h3>
+            <div class="detector-page-word-display" id="currentWord">
+              <span class="detector-page-placeholder-text"
+                >Start signing to build words...</span
+              >
+            </div>
+          </div>
+
+          <div class="sentence-building">
+            <h3><i class="fas fa-paragraph"></i> Sentence</h3>
+            <div class="detector-page-sentence-display" id="currentSentence">
+              <span class="detector-page-placeholder-text"
+                >Words will appear here...</span
+              >
+            </div>
+          </div>
+        </div>
+
+        <!-- Control Buttons -->
+        <div class="detector-page-control-buttons">
+          <button id="resetWordBtn" class="btn btn-warning">
+            <i class="fas fa-undo"></i> Reset Word
+          </button>
+          <button id="resetSentenceBtn" class="btn btn-danger">
+            <i class="fas fa-trash"></i> Reset Sentence
+          </button>
+          <button id="saveSentenceBtn" class="btn btn-primary">
+            <i class="fas fa-save"></i> Save Sentence
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Instructions -->
+    <div class="detector-page-instructions">
+      <h3><i class="fas fa-info-circle"></i> How to Use</h3>
+      <div class="detector-page-instructions-grid">
+        <div class="detector-page-instruction-item">
+          <div class="detector-page-instruction-icon">
+            <i class="fas fa-hand-paper"></i>
+          </div>
+          <h4>Make a Sign</h4>
+          <p>
+            Position your hand clearly in front of the camera and make the
+            desired letter sign.
+          </p>
+        </div>
+        <div class="detector-page-instruction-item">
+          <div class="detector-page-instruction-icon">
+            <i class="fas fa-clock"></i>
+          </div>
+          <h4>Hold for 1.5 Seconds</h4>
+          <p>
+            Keep the same gesture steady for 1.5 seconds to add the letter to
+            your word.
+          </p>
+        </div>
+        <div class="detector-page-instruction-item">
+          <div class="detector-page-instruction-icon">
+            <i class="fas fa-hand-scissors"></i>
+          </div>
+          <h4>Remove Hand for Space</h4>
+          <p>
+            Remove your hand from the camera view for 3 seconds to add a space
+            between words.
+          </p>
+        </div>
+        <div class="detector-page-instruction-item">
+          <div class="detector-page-instruction-icon">
+            <i class="fas fa-save"></i>
+          </div>
+          <h4>Save Your Work</h4>
+          <p>
+            Use the save button to export your completed sentences to a text
+            file.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Alphabet Reference -->
+    <div class="detector-page-alphabet-reference">
+      <h3><i class="fas fa-list"></i> Supported Signs</h3>
+      <div class="detector-page-alphabet-grid">
+        <div class="detector-page-alphabet-section">
+          <h4>Numbers</h4>
+          <div class="detector-page-sign-items">
+            <span class="detector-page-sign-item">1</span>
+            <span class="detector-page-sign-item">2</span>
+            <span class="detector-page-sign-item">3</span>
+            <span class="detector-page-sign-item">4</span>
+            <span class="detector-page-sign-item">5</span>
+            <span class="detector-page-sign-item">6</span>
+            <span class="detector-page-sign-item">7</span>
+            <span class="detector-page-sign-item">8</span>
+            <span class="detector-page-sign-item">9</span>
+          </div>
+        </div>
+        <div class="detector-page-alphabet-section">
+          <h4>Letters A-M</h4>
+          <div class="detector-page-sign-items">
+            <span class="detector-page-sign-item">A</span>
+            <span class="detector-page-sign-item">B</span>
+            <span class="detector-page-sign-item">C</span>
+            <span class="detector-page-sign-item">D</span>
+            <span class="detector-page-sign-item">E</span>
+            <span class="detector-page-sign-item">F</span>
+            <span class="detector-page-sign-item">G</span>
+            <span class="detector-page-sign-item">H</span>
+            <span class="detector-page-sign-item">I</span>
+            <span class="detector-page-sign-item">J</span>
+            <span class="detector-page-sign-item">K</span>
+            <span class="detector-page-sign-item">L</span>
+            <span class="detector-page-sign-item">M</span>
+          </div>
+        </div>
+        <div class="detector-page-alphabet-section">
+          <h4>Letters N-Z</h4>
+          <div class="detector-page-sign-items">
+            <span class="detector-page-sign-item">N</span>
+            <span class="detector-page-sign-item">O</span>
+            <span class="detector-page-sign-item">P</span>
+            <span class="detector-page-sign-item">Q</span>
+            <span class="detector-page-sign-item">R</span>
+            <span class="detector-page-sign-item">S</span>
+            <span class="detector-page-sign-item">T</span>
+            <span class="detector-page-sign-item">U</span>
+            <span class="detector-page-sign-item">V</span>
+            <span class="detector-page-sign-item">W</span>
+            <span class="detector-page-sign-item">X</span>
+            <span class="detector-page-sign-item">Y</span>
+            <span class="detector-page-sign-item">Z</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Status Messages -->
+<div id="statusMessage" class="status-message"></div>
+{% endblock %} {% block extra_scripts %}
+<script src="{{ url_for('static', filename='js/detector.js') }}"></script>
+{% endblock %}

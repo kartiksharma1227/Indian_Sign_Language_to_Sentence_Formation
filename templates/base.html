@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% block title %}ISL Translator{% endblock %}</title>
+    <!-- Base styles (common across all pages) -->
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/base.css') }}"
+    />
+    <!-- External CSS -->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Page-specific styles -->
+    {% block page_css %}{% endblock %} {% block extra_head %}{% endblock %}
+  </head>
+  <body>
+    <!-- Navigation -->
+    <nav class="navbar">
+      <div class="nav-container">
+        <div class="nav-brand">
+          <i class="fas fa-hands nav-icon"></i>
+          <span class="brand-text">ISL Translator</span>
+        </div>
+        <ul class="nav-menu">
+          <li class="nav-item">
+            <a
+              href="{{ url_for('index') }}"
+              class="nav-link {% if request.endpoint == 'index' %}active{% endif %}"
+            >
+              <i class="fas fa-home"></i> Home
+            </a>
+          </li>
+          <li class="nav-item">
+            <a
+              href="{{ url_for('detector') }}"
+              class="nav-link {% if request.endpoint == 'detector' %}active{% endif %}"
+            >
+              <i class="fas fa-video"></i> Detector
+            </a>
+          </li>
+          <li class="nav-item">
+            <a
+              href="{{ url_for('about') }}"
+              class="nav-link {% if request.endpoint == 'about' %}active{% endif %}"
+            >
+              <i class="fas fa-info-circle"></i> About
+            </a>
+          </li>
+        </ul>
+        <div class="nav-toggle">
+          <span class="bar"></span>
+          <span class="bar"></span>
+          <span class="bar"></span>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">{% block content %}{% endblock %}</main>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="footer-container">
+        <div class="footer-content">
+          <div class="footer-section">
+            <h3><i class="fas fa-hands"></i> ISL Translator</h3>
+            <p>
+              Empowering communication through Indian Sign Language technology.
+            </p>
+          </div>
+          <div class="footer-section">
+            <h4>Features</h4>
+            <ul>
+              <li>Real-time detection</li>
+              <li>Word building</li>
+              <li>Sentence creation</li>
+              <li>Save functionality</li>
+            </ul>
+          </div>
+          <div class="footer-section">
+            <h4>Technology</h4>
+            <ul>
+              <li>Computer Vision</li>
+              <li>Machine Learning</li>
+              <li>MediaPipe</li>
+              <li>TensorFlow</li>
+            </ul>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p>&copy; 2025 ISL Translator. Built with ❤️ for accessibility.</p>
+        </div>
+      </div>
+    </footer>
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    {% block extra_scripts %}{% endblock %}
+  </body>
+</html>
