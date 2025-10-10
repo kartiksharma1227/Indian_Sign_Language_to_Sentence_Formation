@@ -373,7 +373,6 @@
     height: 500px;
     max-height: 500px;
     position: relative;
-    /* overflow: hidden; */
 }
 
 .detector-page-results-section::before {
@@ -405,7 +404,6 @@
     border: 1px solid rgba(203, 213, 225, 0.5);
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     position: relative;
-    /* Allow inner boxes to render fully without being clipped */
     overflow: visible;
     box-shadow: 
         0 4px 16px rgba(0, 0, 0, 0.05),
@@ -439,7 +437,6 @@
     font-size: 1.05rem;
     font-weight: 700;
     color: #1f2937;
-    /* Slightly larger gap so boxes below are not hidden under the heading */
     margin-bottom: 0.9rem;
     display: flex;
     align-items: center;
@@ -456,56 +453,78 @@
     filter: drop-shadow(0 1px 2px rgba(16, 185, 129, 0.2));
 }
 
-/* Detected Letter Display */
+/* Detected Letter Display with States */
 .detector-page-detection-letter {
-    font-size: 2.4rem;
-    font-weight: 900;
-    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    text-align: center;
-    padding: 1rem;
-    background-color: linear-gradient(145deg, #ecfdf5 0%, #d1fae5 100%);
-    border-radius: 14px;
-    border: 3px solid transparent;
-    background-image: 
-        linear-gradient(145deg, #ecfdf5 0%, #d1fae5 100%),
-        linear-gradient(135deg, #10b981 0%, #059669 100%);
-    background-origin: border-box;
-    background-clip: padding-box, border-box;
-    /* Ensure enough height so content is visible */
-    min-height: 84px;
-    /* Keep it away from the curved container border */
-    margin-top: 6px;
+    position: relative;
+    overflow: hidden;
     display: flex;
     align-items: center;
     justify-content: center;
+    font-size: 2.4rem;
+    font-weight: 900;
+    color: white;
+    border-radius: 14px;
+    min-height: 84px;
+    margin-top: 6px;
+    padding: 1rem;
+    transition: all 0.3s ease;
     box-shadow: 
-        0 8px 24px rgba(16, 185, 129, 0.15),
-        inset 0 1px 0 rgba(255, 255, 255, 0.5);
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    animation: pulse-detection 2s infinite;
-    position: relative;
-    overflow: hidden;
+        0 8px 24px rgba(0, 0, 0, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3);
 }
 
-.detector-page-detection-letter::before {
+/* Idle state - purple gradient, no animation */
+.detector-page-detection-letter[data-state="idle"] {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.detector-page-detection-letter[data-state="idle"]::before {
+    display: none;
+}
+
+/* Detecting state - animated green with pulse and shimmer */
+.detector-page-detection-letter[data-state="detecting"] {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    animation: pulse 2s ease-in-out infinite;
+    box-shadow: 
+        0 8px 24px rgba(16, 185, 129, 0.3),
+        0 0 20px rgba(16, 185, 129, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+.detector-page-detection-letter[data-state="detecting"]::before {
     content: '';
     position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: conic-gradient(from 0deg, transparent, rgba(16, 185, 129, 0.1), transparent);
-    animation: rotate 3s linear infinite;
-    opacity: 0.7;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.3),
+        transparent
+    );
+    animation: shimmer-slide 2s infinite;
+}
+
+/* No hand detected - gray gradient */
+.detector-page-detection-letter[data-state="no-hand"] {
+    background: linear-gradient(135deg, #bdc3c7 0%, #7f8c8d 100%);
+}
+
+.detector-page-detection-letter[data-state="no-hand"]::before {
+    display: none;
+}
+
+.detector-page-letter-text {
+    position: relative;
+    z-index: 1;
 }
 
 /* Word and Sentence Displays */
 .detector-page-word-display,
 .detector-page-sentence-display {
-    /* Slightly taller for legibility */
     min-height: 48px;
     padding: 0.95rem 1rem;
     background: linear-gradient(145deg, #ffffff 0%, #f9fafb 100%);
@@ -529,7 +548,6 @@
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     line-height: 1.35;
     position: relative;
-    /* Make sure the box is not tucked into the rounded corners above */
     margin-top: 8px;
 }
 
@@ -1010,19 +1028,21 @@
 }
 
 /* Animations */
-@keyframes pulse-detection {
+@keyframes pulse {
     0%, 100% {
         transform: scale(1);
-        box-shadow: 
-            0 10px 30px rgba(16, 185, 129, 0.15),
-            inset 0 1px 0 rgba(255, 255, 255, 0.5);
     }
     50% {
         transform: scale(1.02);
-        box-shadow: 
-            0 15px 40px rgba(16, 185, 129, 0.25),
-            0 0 30px rgba(16, 185, 129, 0.2),
-            inset 0 1px 0 rgba(255, 255, 255, 0.5);
+    }
+}
+
+@keyframes shimmer-slide {
+    0% {
+        left: -100%;
+    }
+    100% {
+        left: 100%;
     }
 }
 
