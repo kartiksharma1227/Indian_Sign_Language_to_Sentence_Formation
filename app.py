@@ -216,9 +216,10 @@ def get_detection():
             # Word building logic
             if detected_letter == last_prediction:
                 if current_time - prediction_start_time >= HOLD_TIME:
-                    if current_time - last_prediction_time >= 0.5:
+                    if current_time - last_prediction_time >= HOLD_TIME:
                         current_word += detected_letter
                         last_prediction_time = current_time
+                        prediction_start_time = current_time  # Reset to prevent immediate re-append
             else:
                 last_prediction = detected_letter
                 prediction_start_time = current_time
