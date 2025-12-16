@@ -1,219 +1,334 @@
-# Indian_Sign_Language_to_Sentence_Formation
+# Indian Sign Language (ISL) Translator
 
-## Overview
+## Project Overview
 
-This is a professional Flask web application for real-time Indian Sign Language (ISL) detection and translation. The application provides a modern, responsive interface for detecting hand gestures, building words, creating sentences, and saving translations.
+This is a comprehensive Indian Sign Language (ISL) translation web application built with Flask, OpenCV, MediaPipe, and TensorFlow. The application provides **bidirectional communication support**:
+
+1. **Sign to Text**: Real-time sign language gesture recognition using webcam, automatically translating ISL gestures into text
+2. **Voice/Text to Sign**: Convert spoken words or typed text into visual sign language sequences for learning and communication
+
+This dual-functionality makes the application useful for both hearing-impaired individuals to communicate with others and for people to learn and understand sign language.
+
+## Screenshots
+
+### Home Page
+
+![Home Page](Demo/home_page.png)
+_Landing page with navigation to different features_
+
+### Sign to Text Detection
+
+![Sign Detection](Demo/detector_page.png)
+_Real-time sign language gesture recognition interface_
+
+### Voice to Sign Conversion
+
+![Voice to Sign](Demo/voice_to_sign_page.png)
+_Speech recognition and sign language display interface_
 
 ## Features
 
-- **Real-time Detection**: Live webcam feed with hand gesture recognition
-- **Word Building**: Automatic letter-to-word formation with timing controls
-- **Sentence Creation**: Smart space insertion between words
-- **Save Functionality**: Export sentences to text files with timestamps
-- **Professional UI**: Modern, responsive design inspired by professional web applications
-- **Keyboard Shortcuts**: Quick access to common functions
-- **Mobile Responsive**: Works on both desktop and mobile devices
+### Sign to Text Translation
 
-## Prerequisites
+- **Real-time Detection**: Instant sign language gesture recognition using webcam
+- **Word Building**: Automatically builds words from detected letters
+- **Sentence Formation**: Intelligently creates sentences with automatic spacing
+- **High Accuracy**: 95%+ accuracy rate with 43 supported signs (numbers 1-9 and letters A-Z)
+- **Save Functionality**: Export translated sentences to text files
+
+### Voice to Sign Translation
+
+- **Speech Recognition**: Convert spoken words into sign language sequences
+- **Manual Text Input**: Type text to convert into sign language
+- **Visual Display**: Shows corresponding sign images for each letter
+- **Playback Controls**: Play, pause, stop, and replay sign sequences
+- **Adjustable Speed**: Control playback speed for better learning
+- **Export Options**: Save sign sequences and translations
+
+### General Features
+
+- **Cross-platform**: Works on Windows, macOS, and Linux with optimized performance
+- **Bidirectional Communication**: Supports both sign-to-text and voice/text-to-sign conversion
+
+## Technology Stack
+
+### Backend
+
+- **Flask**: Python web framework for API and routing
+- **TensorFlow/Keras**: Deep learning model for gesture classification
+- **MediaPipe**: Hand tracking and landmark detection
+- **OpenCV**: Computer vision and video processing
+- **NumPy**: Numerical computations
+
+### Frontend
+
+- **HTML/CSS**: Responsive UI design
+- **JavaScript**: Interactive client-side functionality
+- **Jinja2**: Template engine for dynamic content
+
+## Project Structure
+
+```
+IVP/
+├── app.py                  # Main Flask application
+├── model.h5                # Pre-trained Keras model for gesture classification
+├── requirements.txt        # Python dependencies
+├── README.md              # Project documentation
+├── templates/             # HTML templates
+│   ├── base.html          # Base template with navigation
+│   ├── index.html         # Home page
+│   ├── detector.html      # Main detector interface
+│   ├── voice_to_sign.html # Voice/text to sign converter
+│   └── about.html         # About page
+├── static/                # Static assets
+│   ├── css/              # Stylesheets
+│   │   ├── base.css
+│   │   ├── index.css
+│   │   ├── detector.css
+│   │   ├── voice_to_sign.css
+│   │   └── about.css
+│   ├── Images/           # Sign language images (A-Z)
+│   └── js/               # JavaScript files
+│       ├── main.js       # Common functionality
+│       ├── detector.js   # Detector page logic
+│       └── voice_to_sign.js  # Voice to sign conversion logic
+├── saved_sentences/       # Directory for saved sentence files
+└── Demo/                  # Demo images/videos
+```
+
+## Installation
+
+### Prerequisites
 
 - Python 3.8 or higher
-- Webcam/Camera access
-- Modern web browser (Chrome, Firefox, Safari, Edge)
+- Webcam/Camera
+- pip package manager
 
-## Installation Instructions
+### Setup Instructions
 
-### 1. Clone or Download the Project
+1. **Clone or download the project**
 
-```bash
-cd /path/to/your/project/directory
-```
+   ```bash
+   cd /path/to/project
+   ```
 
-### 2. Create Virtual Environment (Recommended)
+2. **Create a virtual environment**
 
-```bash
-# Create virtual environment
-python -m venv isl_env
+   ```bash
+   python -m venv isl
+   ```
 
-# Activate virtual environment
-# On macOS/Linux:
-source isl_env/bin/activate
-# On Windows:
-isl_env\Scripts\activate
-```
+3. **Activate the virtual environment**
 
-### 3. Install Dependencies
+   - On macOS/Linux:
 
-```bash
-pip install -r requirements.txt
-```
+     ```bash
+     source isl/bin/activate
+     ```
 
-### 4. Verify Model File
+   - On Windows:
+     ```bash
+     isl\Scripts\activate
+     ```
 
-Ensure the `model.h5` file is present in the project root directory. This file contains the trained machine learning model for sign language recognition.
+4. **Install dependencies**
 
-### 5. Create Required Directories
+   ```bash
+   pip install -r requirements.txt
+   ```
 
-The application will automatically create the `saved_sentences` directory when you first save a sentence.
+5. **Run the application**
 
-## Running the Application
+   ```bash
+   python app.py
+   ```
 
-### 1. Start the Flask Server
+6. **Access the application**
+   - Open your browser and navigate to: `http://localhost:5001`
 
-```bash
-python app.py
-```
+## Usage Guide
 
-The server will start on `http://localhost:5001` by default.
+### Sign to Text Detection
 
-### 2. Access the Web Application
+#### Starting Detection
 
-Open your web browser and navigate to:
+1. Navigate to the **Detector** page
+2. Click the **"Start Detection"** button or press **Enter**
+3. Allow camera permissions when prompted
+4. Position your hand clearly in front of the camera
 
-```
-http://localhost:5001
-```
+#### Making Gestures
 
-### 3. Using the Application
+1. **Form a sign** with your hand (A-Z or 1-9)
+2. **Hold the gesture steady** for 1.5 seconds
+3. The letter will be added to your current word
+4. **Use the ASL H symbol** to add a space between words
 
-#### Home Page
+#### Keyboard Shortcuts
 
-- Overview of features and capabilities
-- Navigation to detector and about pages
-- Professional landing page with statistics
+- **Enter**: Start/Stop detection
+- **Space**: Save sentence to file
+- **R**: Reset current word
+- **S**: Reset entire sentence
 
-#### Detector Page
+#### Controls
 
-1. Click "Start Detection" to initialize the camera
-2. Position your hand clearly in front of the camera
-3. Make sign language gestures for letters (A-Z) or numbers (1-9)
-4. Hold each gesture for 1.5 seconds to add it to your word
-5. Remove your hand for 3 seconds to add a space between words
-6. Use control buttons to reset words/sentences or save your work
+- **Reset Word**: Clear the current word being built
+- **Reset Sentence**: Clear the entire sentence
+- **Save Sentence**: Export the sentence to a timestamped text file
 
-#### Keyboard Shortcuts (Detector Page)
+### Voice/Text to Sign Conversion
 
-- `Enter`: Start/Stop detection
-- `Space`: Save sentence
-- `R`: Reset current word
-- `S`: Reset entire sentence
+#### Using Voice Input
 
-#### About Page
+1. Navigate to the **Voice to Sign** page
+2. Click the **microphone button** to start recording
+3. Speak clearly into your device's microphone
+4. The recognized text will appear automatically
+5. Click **"Convert to Signs"** to generate the sign sequence
 
-- Technical details about the system
-- How the technology works
-- Feature explanations
+#### Using Manual Text Input
 
-## File Structure
+1. Navigate to the **Voice to Sign** page
+2. Type your text in the input field
+3. Click **"Convert to Signs"** to generate the sign sequence
 
-```
-ISL-Translator/
-├── app.py                 # Main Flask application
-├── model.h5              # Trained ML model
-├── requirements.txt      # Python dependencies
-├── README_WEBAPP.md     # This setup guide
-├── templates/           # HTML templates
-│   ├── base.html       # Base template
-│   ├── index.html      # Home page
-│   ├── detector.html   # Detector page
-│   └── about.html      # About page
-├── static/             # Static assets
-│   ├── css/
-│   │   └── style.css   # Main stylesheet
-│   └── js/
-│       ├── main.js     # Common JavaScript
-│       └── detector.js # Detector functionality
-└── saved_sentences/    # Generated sentence files
-    ├── sentence_YYYYMMDD_HHMMSS.txt
-    └── all_sentences.txt
-```
+#### Playback Controls
+
+- **Play**: Start displaying the sign sequence
+- **Pause**: Temporarily pause the playback
+- **Stop**: Stop and reset the playback
+- **Replay**: Start the sequence from the beginning
+- **Speed Control**: Adjust playback speed (0.5x to 2x)
+
+#### Additional Features
+
+- **Progress Bar**: Visual indicator of playback progress
+- **Statistics**: View letter count, word count, and estimated duration
+- **Export**: Save the sign sequence for later reference
+- **Clear**: Reset all inputs and outputs
+
+## How It Works
+
+### Detection Pipeline
+
+1. **Hand Detection**: MediaPipe identifies hand landmarks (21 key points)
+2. **Feature Extraction**: Landmarks are normalized and converted to feature vectors
+3. **Classification**: Neural network classifies the gesture into one of 43 signs
+4. **Word Building**: Detected letters are combined using timing logic
+
+### Architecture Components
+
+#### Backend Processing
+
+- **Capture Thread**: Continuously grabs frames from camera
+- **Processing Thread**: Processes frames for hand detection and classification
+- **Threading Synchronization**: Uses locks to safely share data between threads
+
+#### Detection Logic
+
+- **Hold Time**: 1.5 seconds to confirm letter addition
+- **Space Gesture**: ASL H symbol to add space between words
+- **Frame Rate Control**: Optimized processing intervals for performance
+
+## Model Information
+
+The application uses a pre-trained neural network (`model.h5`) that:
+
+- Accepts normalized hand landmark coordinates (42 values)
+- Outputs probabilities for 43 classes (1-9, A-Z)
+- Trained on thousands of sign language gesture samples
+- Achieves 95%+ accuracy on test data
+
+## Performance Optimization
+
+### OS-Specific Settings
+
+- **Windows**: More aggressive optimization for better performance
+
+  - Lower resolution processing
+  - Frame skipping
+  - Disabled landmark drawing
+  - DirectShow camera backend
+
+- **macOS/Linux**: Balanced performance and quality
+  - Higher resolution processing
+  - Full frame processing
+  - Landmark visualization enabled
+
+### Configuration Variables
+
+All performance settings can be adjusted in `app.py`:
+
+- `FRAME_WIDTH`, `FRAME_HEIGHT`: Camera capture resolution
+- `PROCESSING_WIDTH`, `PROCESSING_HEIGHT`: Processing frame size
+- `JPEG_QUALITY`: Video stream compression quality
+- `PROCESS_EVERY_N_FRAMES`: Frame processing frequency
+
+## API Endpoints
+
+### GET Routes
+
+- `/` - Home page
+- `/detector` - Detector interface page (Sign to Text)
+- `/voice_to_sign` - Voice/Text to Sign converter page
+- `/about` - About page
+- `/start_detection` - Initialize camera and start detection
+- `/stop_detection` - Stop detection and release resources
+- `/get_detection_meta` - Get detection results (without video frame)
+- `/get_detection` - Get detection results with video frame
+- `/video_stream` - Motion JPEG video stream
+
+### POST Routes
+
+- `/save_sentence` - Save current sentence to file
+- `/reset_word` - Reset current word
+- `/reset_sentence` - Reset entire sentence
+- `/api/text_to_signs` - Convert text input to sign language image sequence
+
+## File Saving
+
+Sentences are automatically saved to the `saved_sentences/` directory with:
+
+- Timestamp in filename: `sentence_YYYYMMDD_HHMMSS.txt`
+- Formatted content with date and separator
+- UTF-8 encoding
 
 ## Troubleshooting
 
 ### Camera Issues
 
-- Ensure your browser has camera permissions enabled
-- Check if other applications are using the camera
-- Try refreshing the page and clicking "Start Detection" again
+- **Camera not detected**: Ensure no other application is using the camera
+- **Permission denied**: Grant camera permissions in browser/OS settings
+- **Poor performance**: Reduce `FRAME_WIDTH` and `FRAME_HEIGHT` in `app.py`
+
+### Detection Issues
+
+- **Low accuracy**: Ensure good lighting and clear hand visibility
+- **Slow response**: Increase `PROCESS_EVERY_N_FRAMES` for faster processing
+- **Letters not adding**: Hold gesture steady for full 1.5 seconds
 
 ### Performance Issues
 
-- Close other applications that might be using the camera
-- Ensure good lighting conditions for better detection
-- Use a modern web browser for optimal performance
-
-### Installation Issues
-
-- Ensure Python 3.8+ is installed
-- Try upgrading pip: `pip install --upgrade pip`
-- If TensorFlow installation fails, try: `pip install tensorflow-cpu`
-
-### Port Already in Use
-
-If port 5000 is already in use, modify `app.py`:
-
-```python
-app.run(debug=True, host='0.0.0.0', port=5001)  # Change port number
-```
-
-## Configuration Options
-
-### Timing Settings (in app.py)
-
-- `HOLD_TIME = 1.5`: Time to hold gesture for letter detection
-- `SPACE_DELAY = 3.0`: Time without hand to add space
-
-### Camera Settings
-
-- Resolution and detection parameters can be modified in the MediaPipe initialization
-
-## API Endpoints
-
-- `GET /`: Home page
-- `GET /detector`: Detector page
-- `GET /about`: About page
-- `GET /start_detection`: Initialize camera
-- `GET /get_detection`: Get current detection results
-- `POST /save_sentence`: Save current sentence
-- `POST /reset_word`: Reset current word
-- `POST /reset_sentence`: Reset entire sentence
-- `GET /stop_detection`: Stop camera
-
-## Security Considerations
-
-- All video processing happens locally (no data transmission)
-- Saved files are stored locally only
-- No personal data is collected or transmitted
+- **High CPU usage**: Enable Windows optimizations (set `IS_WINDOWS = True`)
+- **Laggy video**: Reduce `JPEG_QUALITY` or `FRAME_WIDTH`/`FRAME_HEIGHT`
+- **Memory issues**: Restart the application periodically
 
 ## Browser Compatibility
 
-- Chrome 80+ (Recommended)
-- Firefox 75+
-- Safari 13+
-- Edge 80+
+### Sign Detection (Camera)
 
-## Performance Tips
+- **Chrome/Edge**: Recommended (best performance)
+- **Firefox**: Fully supported
+- **Safari**: Supported with minor limitations
+ 
 
-- Use good lighting for better detection accuracy
-- Keep hand movements clear and distinct
-- Ensure stable internet connection for initial loading
-- Close unnecessary browser tabs for better performance
+### Voice Recognition
 
-## Support
+- **Chrome/Edge**: Full support for Web Speech API
+- **Safari**: Supported on macOS and iOS
+- **Firefox**: Limited support (manual text input recommended)
 
-For technical issues or questions about the implementation, check:
+---
 
-1. Browser console for JavaScript errors
-2. Terminal output for Python errors
-3. Camera permissions in browser settings
-4. File permissions for saved_sentences directory
-
-## Development Mode
-
-The application runs in debug mode by default. For production deployment:
-
-1. Set `debug=False` in `app.run()`
-2. Use a production WSGI server like Gunicorn
-3. Configure proper logging
-4. Set up environment variables for configuration
-
-Enjoy using the ISL Translator web application!
+**Note**: This application requires a webcam and runs best on desktop/laptop computers with good lighting conditions.

@@ -1,9 +1,29 @@
-// Main JavaScript for common functionality
+/**
+ * Main JavaScript Module for ISL Translator Application
+ *
+ * Provides common functionality across all pages including:
+ * - Mobile navigation menu handling
+ * - Smooth scrolling for anchor links
+ * - Scroll-based animations
+ * - Parallax effects
+ * - Utility functions for status messages and timing
+ *
+ *  
+ *  
+ */
+
+/**
+ * Initialize all common functionality when DOM is fully loaded
+ */
 document.addEventListener("DOMContentLoaded", function () {
   // Mobile navigation toggle
   const navToggle = document.querySelector(".nav-toggle");
   const navMenu = document.querySelector(".nav-menu");
 
+  /**
+   * Toggle mobile navigation menu on hamburger button click
+   * Animates the hamburger icon into an X shape when menu is open
+   */
   if (navToggle && navMenu) {
     navToggle.addEventListener("click", function () {
       navMenu.classList.toggle("active");
@@ -25,7 +45,10 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
-  // Close mobile menu when clicking on a link
+  /**
+   * Close mobile menu when clicking on any navigation link
+   * Provides better UX on mobile devices
+   */
   const navLinks = document.querySelectorAll(".nav-link");
   navLinks.forEach((link) => {
     link.addEventListener("click", () => {
@@ -41,7 +64,10 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 
-  // Smooth scrolling for anchor links
+  /**
+   * Enable smooth scrolling for all anchor links on the page
+   * Improves navigation experience for in-page links
+   */
   const anchorLinks = document.querySelectorAll('a[href^="#"]');
   anchorLinks.forEach((link) => {
     link.addEventListener("click", function (e) {
@@ -57,12 +83,23 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 
-  // Animate elements on scroll
+  /**
+   * Setup Intersection Observer for scroll-based animations
+   * Elements fade in and slide up when they enter the viewport
+   *
+   * @type {IntersectionObserverInit}
+   */
   const observerOptions = {
     threshold: 0.1,
     rootMargin: "0px 0px -100px 0px",
   };
 
+  /**
+   * Callback for Intersection Observer
+   * Triggers fade-in and slide-up animations when elements become visible
+   *
+   * @param {IntersectionObserverEntry[]} entries - Array of observed elements
+   */
   const observer = new IntersectionObserver(function (entries) {
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
@@ -72,7 +109,10 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }, observerOptions);
 
-  // Observe elements that should animate on scroll
+  /**
+   * Observe all animatable elements for scroll-based animations
+   * Initializes elements with hidden state before animation
+   */
   const animateElements = document.querySelectorAll(
     ".feature-card, .tech-card, .process-step, .stat-item"
   );
@@ -83,7 +123,10 @@ document.addEventListener("DOMContentLoaded", function () {
     observer.observe(element);
   });
 
-  // Add parallax effect to hero section
+  /**
+   * Add parallax scrolling effect to hero section
+   * Creates depth by moving hero visual at different speed than scroll
+   */
   const hero = document.querySelector(".hero");
   if (hero) {
     window.addEventListener("scroll", function () {
@@ -96,7 +139,10 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
-  // Animate gesture indicators
+  /**
+   * Animate gesture indicator dots in sequence
+   * Creates a pulsing animation effect cycling through indicators
+   */
   const gestureIndicators = document.querySelectorAll(".gesture-dot");
   if (gestureIndicators.length > 0) {
     let currentDot = 0;
@@ -107,7 +153,10 @@ document.addEventListener("DOMContentLoaded", function () {
     }, 2000);
   }
 
-  // Add loading animation to buttons
+  /**
+   * Add visual feedback (scale animation) to all buttons on click
+   * Provides tactile feedback for better UX
+   */
   const buttons = document.querySelectorAll(".btn");
   buttons.forEach((button) => {
     button.addEventListener("click", function () {
@@ -121,7 +170,17 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 });
 
-// Utility function to show status messages
+/**
+ * Display a status message to the user
+ *
+ * @param {string} message - The message text to display
+ * @param {string} [type='success'] - Message type: 'success', 'error', 'warning', or 'info'
+ * @param {number} [duration=3000] - How long to display the message in milliseconds
+ *
+ * @example
+ * showStatus('Camera started successfully!', 'success', 3000);
+ * showStatus('Error loading camera', 'error', 5000);
+ */
 function showStatus(message, type = "success", duration = 3000) {
   // Remove existing status messages
   const existingMessages = document.querySelectorAll(".status-message");
@@ -148,14 +207,34 @@ function showStatus(message, type = "success", duration = 3000) {
   }, duration);
 }
 
-// Utility function to format time
+/**
+ * Format seconds into MM:SS display format
+ *
+ * @param {number} seconds - Total seconds to format
+ * @returns {string} Formatted time string in MM:SS format
+ *
+ * @example
+ * formatTime(125) // Returns "2:05"
+ * formatTime(59)  // Returns "0:59"
+ */
 function formatTime(seconds) {
   const minutes = Math.floor(seconds / 60);
   const remainingSeconds = Math.floor(seconds % 60);
   return `${minutes}:${remainingSeconds.toString().padStart(2, "0")}`;
 }
 
-// Utility function to debounce function calls
+/**
+ * Create a debounced version of a function to limit call frequency
+ * Useful for optimizing expensive operations triggered by frequent events
+ *
+ * @param {Function} func - The function to debounce
+ * @param {number} wait - Milliseconds to wait before executing function
+ * @returns {Function} Debounced version of the original function
+ *
+ * @example
+ * const debouncedSearch = debounce(performSearch, 300);
+ * searchInput.addEventListener('input', debouncedSearch);
+ */
 function debounce(func, wait) {
   let timeout;
   return function executedFunction(...args) {

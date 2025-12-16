@@ -1,4 +1,24 @@
 <!DOCTYPE html>
+<!--
+  Base Template for ISL Translator Application
+  
+  This template provides the common structure for all pages including:
+  - Navigation bar with responsive mobile menu
+  - Main content area (filled by child templates)
+  - Footer with project information
+  
+  Template Blocks:
+  - title: Page title (defaults to "ISL Translator")
+  - page_css: Page-specific CSS files
+  - extra_head: Additional head content
+  - content: Main page content
+  - extra_scripts: Page-specific JavaScript files
+  
+  Dependencies:
+  - Font Awesome 6.0.0 for icons
+  - Inter font from Google Fonts
+  - base.css for common styles
+-->
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -43,7 +63,15 @@
               href="{{ url_for('detector') }}"
               class="nav-link {% if request.endpoint == 'detector' %}active{% endif %}"
             >
-              <i class="fas fa-video"></i> Detector
+              <i class="fas fa-video"></i> Sign to Text
+            </a>
+          </li>
+          <li class="nav-item">
+            <a
+              href="{{ url_for('voice_to_sign') }}"
+              class="nav-link {% if request.endpoint == 'voice_to_sign' %}active{% endif %}"
+            >
+              <i class="fas fa-microphone-alt"></i> Voice to Sign
             </a>
           </li>
           <li class="nav-item">
@@ -66,42 +94,7 @@
     <!-- Main Content -->
     <main class="main-content">{% block content %}{% endblock %}</main>
 
-    <!-- Footer -->
-    <footer class="footer">
-      <div class="footer-container">
-        <div class="footer-content">
-          <div class="footer-section">
-            <h3><i class="fas fa-hands"></i> ISL Translator</h3>
-            <p>
-              Empowering communication through Indian Sign Language technology.
-            </p>
-          </div>
-          <div class="footer-section">
-            <h4>Features</h4>
-            <ul>
-              <li>Real-time detection</li>
-              <li>Word building</li>
-              <li>Sentence creation</li>
-              <li>Save functionality</li>
-            </ul>
-          </div>
-          <div class="footer-section">
-            <h4>Technology</h4>
-            <ul>
-              <li>Computer Vision</li>
-              <li>Machine Learning</li>
-              <li>MediaPipe</li>
-              <li>TensorFlow</li>
-            </ul>
-          </div>
-        </div>
-        <div class="footer-bottom">
-          <p>&copy; 2025 ISL Translator. Built with ❤️ for accessibility.</p>
-        </div>
-      </div>
-    </footer>
-
     <script src="{{ url_for('static', filename='js/main.js') }}"></script>
-    {% block extra_scripts %}{% endblock %}
+    {% block extra_scripts %}{% endblock %} {% block page_js %}{% endblock %}
   </body>
 </html>
