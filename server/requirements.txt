@@ -1,0 +1,20 @@
+# ISL Translator Backend - Python Dependencies
+# Optimized for Render deployment
+
+# Flask Web Framework
+Flask==2.3.3
+Werkzeug==2.3.7
+flask-cors==4.0.0
+
+# Computer Vision and Machine Learning
+opencv-python-headless==4.8.1.78
+mediapipe==0.10.8
+tensorflow==2.15.0
+numpy==1.24.3
+protobuf==3.20.3
+
+# Spell Checking
+pyspellchecker==0.7.2
+
+# Production Server
+gunicorn==21.2.0

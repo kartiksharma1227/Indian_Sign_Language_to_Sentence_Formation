@@ -1,0 +1,7 @@
+#!/Volumes/T7_Shield/MY_Proj/Indian_Sign_Language_to_Sentence_Formation/server/islvenv/bin/python3.10
+import sys
+from fontTools.subset import main
+if __name__ == '__main__':
+    if sys.argv[0].endswith('.exe'):
+        sys.argv[0] = sys.argv[0][:-4]
+    sys.exit(main())

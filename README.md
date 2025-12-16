@@ -68,83 +68,286 @@ _Speech recognition and sign language display interface_
 
 ## Project Structure
 
+This project is organized into a **client-server architecture** for better maintainability and deployment flexibility:
+
 ```
-IVP/
-├── app.py                  # Main Flask application
-├── model.h5                # Pre-trained Keras model for gesture classification
-├── requirements.txt        # Python dependencies
-├── README.md              # Project documentation
-├── templates/             # HTML templates
-│   ├── base.html          # Base template with navigation
-│   ├── index.html         # Home page
-│   ├── detector.html      # Main detector interface
-│   ├── voice_to_sign.html # Voice/text to sign converter
-│   └── about.html         # About page
-├── static/                # Static assets
-│   ├── css/              # Stylesheets
-│   │   ├── base.css
-│   │   ├── index.css
-│   │   ├── detector.css
-│   │   ├── voice_to_sign.css
-│   │   └── about.css
-│   ├── Images/           # Sign language images (A-Z)
-│   └── js/               # JavaScript files
-│       ├── main.js       # Common functionality
-│       ├── detector.js   # Detector page logic
-│       └── voice_to_sign.js  # Voice to sign conversion logic
-├── saved_sentences/       # Directory for saved sentence files
-└── Demo/                  # Demo images/videos
+Indian_Sign_Language_to_Sentence_Formation/
+├── README.md                   # Project documentation
+├── DEPLOYMENT.md              # Deployment guide
+├── requirements.txt           # Root-level dependencies (legacy)
+├── Dockerfile                 # Root-level Docker configuration (legacy)
+├── model.h5                   # Pre-trained Keras model (legacy)
+│
+├── server/                    # 🔧 Backend Flask API
+│   ├── app.py                # Main Flask application & API endpoints
+│   ├── model.h5              # Pre-trained gesture classification model
+│   ├── requirements.txt      # Python dependencies for backend
+│   ├── Dockerfile            # Docker configuration for server
+│   ├── render.yaml           # Render deployment configuration
+│   └── islvenv/              # Virtual environment (not in git)
+│
+├── client/                    # 🎨 Frontend Web Application
+│   ├── index.html            # Home/landing page
+│   ├── detector.html         # Sign-to-text detector interface
+│   ├── voice_to_sign.html    # Voice/text-to-sign converter
+│   ├── about.html            # About page
+│   ├── render.yaml           # Render deployment configuration
+│   └── static/               # Static assets
+│       ├── css/              # Stylesheets
+│       │   ├── base.css      # Common styles
+│       │   ├── index.css     # Home page styles
+│       │   ├── detector.css  # Detector page styles
+│       │   ├── voice_to_sign.css
+│       │   └── about.css
+│       ├── images/           # Sign language images (A-Z)
+│       └── js/               # JavaScript files
+│           ├── main.js       # Common functionality
+│           ├── detector.js   # Detector page logic
+│           └── voice_to_sign.js
+│
+├── templates/                 # Legacy template files
+├── static/                    # Legacy static files
+└── Demo/                      # Demo screenshots and videos
 ```
 
-## Installation
+### Folder Descriptions
+
+#### 📁 `server/` - Backend API Server
+
+The Flask-based backend that handles:
+
+- Real-time sign language detection using webcam
+- Hand landmark detection with MediaPipe
+- Gesture classification using TensorFlow/Keras
+- Video streaming and processing
+- API endpoints for sign detection and text-to-sign conversion
+
+#### 📁 `client/` - Frontend Web Application
+
+Static HTML/CSS/JS frontend that provides:
+
+- User interface for all features
+- Webcam integration for sign detection
+- Voice recognition for speech-to-sign
+- Interactive controls and displays
+- Responsive design for different devices
+
+## Installation & Setup
+
+This project has separate setup instructions for the **server** (backend API) and **client** (frontend). You can run them independently or together.
 
 ### Prerequisites
 
-- Python 3.8 or higher
-- Webcam/Camera
-- pip package manager
+- **Python 3.8+** (recommended: Python 3.10)
+- **Webcam/Camera** (for sign detection)
+- **pip** package manager
+- **Modern web browser** (Chrome, Edge, Firefox, or Safari)
 
-### Setup Instructions
+---
 
-1. **Clone or download the project**
+### 🔧 Server Setup (Backend)
+
+The server handles all the AI/ML processing, camera access, and API endpoints.
+
+#### 1. Navigate to server directory
+
+```bash
+cd server
+```
+
+#### 2. Create a virtual environment
+
+```bash
+python -m venv islvenv
+```
+
+or if you have Python 3.10 specifically:
+
+```bash
+python3.10 -m venv islvenv
+```
+
+#### 3. Activate the virtual environment
+
+- **macOS/Linux:**
+
+  ```bash
+  source islvenv/bin/activate
+  ```
+
+- **Windows:**
+  ```bash
+  islvenv\Scripts\activate
+  ```
+
+#### 4. Install server dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+#### 5. Run the Flask server
+
+```bash
+python app.py
+```
+
+The server will start on `http://localhost:5001`
+
+**Server Endpoints:**
+
+- `GET /` - Health check / API info
+- `GET /start_detection` - Initialize camera and start detection
+- `GET /stop_detection` - Stop detection and release resources
+- `GET /video_stream` - Motion JPEG video stream
+- `GET /get_detection` - Get detection results with video frame
+- `POST /save_sentence` - Save current sentence to file
+- `POST /reset_word` - Reset current word
+- `POST /reset_sentence` - Reset entire sentence
+- `POST /api/text_to_signs` - Convert text to sign language sequence
+
+---
+
+### 🎨 Client Setup (Frontend)
+
+The client is a static web application that can be served with any HTTP server.
+
+#### Option 1: Using Python's HTTP Server (Recommended for Development)
+
+1. Navigate to client directory
 
    ```bash
-   cd /path/to/project
+   cd client
    ```
 
-2. **Create a virtual environment**
+2. Start a simple HTTP server
 
-   ```bash
-   python -m venv isl
-   ```
-
-3. **Activate the virtual environment**
-
-   - On macOS/Linux:
+   - **Python 3.x:**
 
      ```bash
-     source isl/bin/activate
+     python -m http.server 8000
      ```
 
-   - On Windows:
+   - **Python 2.x:**
      ```bash
-     isl\Scripts\activate
+     python -m SimpleHTTPServer 8000
      ```
 
-4. **Install dependencies**
+3. Open your browser and navigate to: `http://localhost:8000`
+
+#### Option 2: Using Node.js http-server
+
+1. Install http-server globally (one-time setup)
 
    ```bash
-   pip install -r requirements.txt
+   npm install -g http-server
    ```
 
-5. **Run the application**
+2. Navigate to client directory and run
 
    ```bash
+   cd client
+   http-server -p 8000
+   ```
+
+3. Open your browser and navigate to: `http://localhost:8000`
+
+#### Option 3: Using VS Code Live Server
+
+1. Install the "Live Server" extension in VS Code
+2. Right-click on `client/index.html`
+3. Select "Open with Live Server"
+
+---
+
+### 🚀 Running the Complete Application
+
+To use the full application with all features, you need **both** the server and client running:
+
+1. **Terminal 1 - Start the Backend Server:**
+
+   ```bash
+   cd server
+   source islvenv/bin/activate  # On Windows: islvenv\Scripts\activate
    python app.py
    ```
 
-6. **Access the application**
-   - Open your browser and navigate to: `http://localhost:5001`
+   Server will run on `http://localhost:5001`
+
+2. **Terminal 2 - Start the Frontend Client:**
+
+   ```bash
+   cd client
+   python -m http.server 8000
+   ```
+
+   Client will run on `http://localhost:8000`
+
+3. **Access the Application:**
+
+   Open your browser and go to: `http://localhost:8000`
+
+**Note:** The client needs to connect to the server API. If you change the server port from 5001, you'll need to update the API URL in the client JavaScript files (`client/static/js/*.js`).
+
+---
+
+### Quick Start Commands
+
+#### Using Startup Scripts (Recommended):
+
+**macOS/Linux:**
+
+```bash
+# Terminal 1 - Server
+./start-server.sh
+
+# Terminal 2 - Client
+./start-client.sh
+```
+
+**Windows:**
+
+```cmd
+REM Terminal 1 - Server
+start-server.bat
+
+REM Terminal 2 - Client
+start-client.bat
+```
+
+#### Manual Commands:
+
+**For Full Application:**
+
+```bash
+# Terminal 1 - Server
+cd server && source islvenv/bin/activate && python app.py
+
+# Terminal 2 - Client
+cd client && python -m http.server 8000
+```
+
+**Server Only (API Development):**
+
+```bash
+cd server
+source islvenv/bin/activate
+python app.py
+```
+
+**Client Only (Frontend Development):**
+
+```bash
+cd client
+python -m http.server 8000
+```
+
+---
+
+## 📋 Additional Resources
+
+- **[QUICKSTART.md](QUICKSTART.md)** - Detailed troubleshooting guide and common issues
+- **[DEPLOYMENT.md](DEPLOYMENT.md)** - Production deployment instructions
 
 ## Usage Guide
 
@@ -258,7 +461,7 @@ The application uses a pre-trained neural network (`model.h5`) that:
 
 ### Configuration Variables
 
-All performance settings can be adjusted in `app.py`:
+All performance settings can be adjusted in `server/app.py`:
 
 - `FRAME_WIDTH`, `FRAME_HEIGHT`: Camera capture resolution
 - `PROCESSING_WIDTH`, `PROCESSING_HEIGHT`: Processing frame size
@@ -288,7 +491,7 @@ All performance settings can be adjusted in `app.py`:
 
 ## File Saving
 
-Sentences are automatically saved to the `saved_sentences/` directory with:
+Sentences are automatically saved to the `server/saved_sentences/` directory with:
 
 - Timestamp in filename: `sentence_YYYYMMDD_HHMMSS.txt`
 - Formatted content with date and separator
@@ -296,23 +499,88 @@ Sentences are automatically saved to the `saved_sentences/` directory with:
 
 ## Troubleshooting
 
-### Camera Issues
+### Server Issues
+
+#### Camera Issues
 
 - **Camera not detected**: Ensure no other application is using the camera
-- **Permission denied**: Grant camera permissions in browser/OS settings
-- **Poor performance**: Reduce `FRAME_WIDTH` and `FRAME_HEIGHT` in `app.py`
+- **Permission denied**: Grant camera permissions in OS settings
+- **Poor performance**: Reduce `FRAME_WIDTH` and `FRAME_HEIGHT` in `server/app.py`
 
-### Detection Issues
+#### Detection Issues
 
 - **Low accuracy**: Ensure good lighting and clear hand visibility
 - **Slow response**: Increase `PROCESS_EVERY_N_FRAMES` for faster processing
 - **Letters not adding**: Hold gesture steady for full 1.5 seconds
 
-### Performance Issues
+#### Performance Issues
 
-- **High CPU usage**: Enable Windows optimizations (set `IS_WINDOWS = True`)
+- **High CPU usage**: Enable Windows optimizations in `server/app.py` (set `IS_WINDOWS = True`)
 - **Laggy video**: Reduce `JPEG_QUALITY` or `FRAME_WIDTH`/`FRAME_HEIGHT`
 - **Memory issues**: Restart the application periodically
+
+#### Module Import Errors
+
+- Make sure you're in the virtual environment: `source islvenv/bin/activate`
+- Reinstall dependencies: `pip install -r requirements.txt`
+- Check Python version: `python --version` (should be 3.8+)
+
+### Client Issues
+
+#### Cannot Connect to Server
+
+- Ensure the server is running on `http://localhost:5001`
+- Check for CORS errors in browser console
+- Verify the API URL in `client/static/js/*.js` files matches your server address
+
+#### Camera Not Working in Browser
+
+- Grant camera permissions when prompted
+- Use HTTPS or localhost (some browsers require secure context)
+- Try a different browser (Chrome/Edge recommended)
+
+#### Voice Recognition Not Working
+
+- Use Chrome/Edge for best voice recognition support
+- Check microphone permissions in browser
+- Use manual text input as fallback in Firefox
+
+### Port Conflicts
+
+If port 5001 or 8000 is already in use:
+
+**Change Server Port:**
+
+Edit `server/app.py`:
+
+```python
+app.run(host='0.0.0.0', port=5002)  # Change to any available port
+```
+
+**Change Client Port:**
+
+```bash
+python -m http.server 9000  # Use any available port
+```
+
+**Update API URLs:**
+
+If you change the server port, update the API endpoints in:
+
+- `client/static/js/detector.js`
+- `client/static/js/voice_to_sign.js`
+
+Change from:
+
+```javascript
+const API_URL = "http://localhost:5001";
+```
+
+To:
+
+```javascript
+const API_URL = "http://localhost:YOUR_NEW_PORT";
+```
 
 ## Browser Compatibility
 
@@ -321,7 +589,6 @@ Sentences are automatically saved to the `saved_sentences/` directory with:
 - **Chrome/Edge**: Recommended (best performance)
 - **Firefox**: Fully supported
 - **Safari**: Supported with minor limitations
- 
 
 ### Voice Recognition
 

@@ -1,0 +1,5 @@
+#!/Volumes/T7_Shield/MY_Proj/Indian_Sign_Language_to_Sentence_Formation/server/islvenv/bin/python3.10
+import sys
+from lib2to3.main import main
+
+sys.exit(main("lib2to3.fixes"))

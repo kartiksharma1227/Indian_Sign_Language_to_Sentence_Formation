@@ -1,9 +1,0 @@
-services:
-  - type: web
-    name: isl-translator
-    env: docker
-    plan: free
-    dockerfilePath: ./Dockerfile
-    envVars:
-      - key: PORT
-        value: 5001

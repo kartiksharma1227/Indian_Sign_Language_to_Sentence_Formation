@@ -1,0 +1,16 @@
+# Render deployment configuration for ISL Translator Backend
+# https://render.com/docs/yaml-spec
+
+services:
+  # Backend API Service (Docker)
+  - type: web
+    name: isl-translator-api
+    runtime: docker
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    region: oregon
+    plan: free
+    healthCheckPath: /api/health
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.10"
